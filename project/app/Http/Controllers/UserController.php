@@ -8,5 +8,6 @@ class UserController extends Controller
 {
     public function login(Request $req) {}
     public function register(Request $req) {}
+    public function update(Request $req) {}
     public function show(int $id) {}
 }
