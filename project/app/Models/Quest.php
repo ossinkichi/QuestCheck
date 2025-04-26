@@ -9,4 +9,16 @@ class Quest extends Model
 {
     /** @use HasFactory<\Database\Factories\QuestFactory> */
     use HasFactory;
+
+    protected $fillable = [
+        'title',
+        'content',
+        'completed',
+        'completed_at'
+    ];
+
+    protected $hidden = [
+        'created_at',
+        'id_user'
+    ];
 }

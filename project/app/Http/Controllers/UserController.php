@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class QuestController extends Controller
+class UserController extends Controller
 {
+    public function login(Request $req) {}
     public function register(Request $req) {}
     public function show(int $id) {}
 }
