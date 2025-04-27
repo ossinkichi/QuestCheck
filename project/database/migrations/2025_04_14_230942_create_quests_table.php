@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('title')->required();
-            $table->text('description')->required();
+            $table->text('description')->nullable();
+            $table->integer('points')->default(0);
             $table->boolean('completed')->default(false);
             $table->time('completed_at')->nullable();
             $table->timestamp('created_at');

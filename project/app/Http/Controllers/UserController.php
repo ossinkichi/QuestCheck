@@ -29,7 +29,7 @@ class UserController extends Controller
         }
 
         return \response()->json([
-            'message' => 'Logado com sucesso',
+            'message' => '',
             'data' => $user
         ], 200);
     }
@@ -63,6 +63,7 @@ class UserController extends Controller
     public function update(Request $req)
     {
         $form = Validator::make($req->all(), [
+            'id' => 'integer|required|exists.users,id',
             'name' => 'string|required|min:3',
             'email' => 'string|email|required|unique:users,email,' . $req->user()->id,
         ]);
@@ -71,7 +72,7 @@ class UserController extends Controller
             return \response()->json($form->errors(), 422);
         }
 
-        $user = User::update([
+        $user = User::where('id', $req->id)->update([
             'name' => $req->name,
             'email' => $req->email
         ]);
@@ -88,7 +89,7 @@ class UserController extends Controller
         $user = User::findOrFail($id);
 
         return \response()->json([
-            'message' => 'Usuário encontrado',
+            'message' => '',
             'data' => $user
         ], 200);
     }

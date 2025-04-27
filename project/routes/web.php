@@ -15,7 +15,8 @@ Route::put('/user/update', [UserController::class, 'update']);
 Route::post('/user/show/{id}', [UserController::class, 'show']);
 
 // Quest routes
+Route::get('/quest/{id}', [QuestController::class, 'index']);
 Route::post('/quest/create', [QuestController::class, 'create']);
 Route::put('/quest/update', [QuestController::class, 'update']);
-Route::patch('/quest/check/{id}', [QuestController::class, 'check']);
 Route::get('quest/show/{id}', [QuestController::class, 'show']);
+Route::put('/quest/check/{id}', [QuestController::class, 'check']);
