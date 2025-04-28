@@ -6,8 +6,10 @@ use DateTime;
 use App\Models\Quest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use GuzzleHttp\Psr7\Response;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Validator;
+use LDAP\Result;
 
 class QuestController extends Controller
 {
@@ -16,17 +18,16 @@ class QuestController extends Controller
     {
         $quests = Quest::where('user_id', $id)->get();
 
-        if (!$quests) {
+        return $quests->whenEmpty(function () {
             return \response()->json(['message' => 'Nenhuma tarefa encontrada!'], 404);
-        }
-
-        return \response()->json([
-            'message' => '',
-            'data' => $quests
-        ], 200);
+        }, function ($quests) {
+            return \response()->json([
+                'data' => $quests
+            ], 200);
+        });
     }
 
-    public function create(Request $req)
+    public function create(Request $req): Response
     {
         $form = Validator::make($req->all(), [
             'user' => 'integer|required|exists:users,id',
@@ -45,14 +46,14 @@ class QuestController extends Controller
             'user_id' => $req->user
         ]);
 
-        if (!$quest) {
+        return $quest->whenEmpty(function () {
             return \response()->json(['message' => 'Não foi possivel criar a tarefa'], 500);
-        }
-
-        return \response()->json(['message' => ''], 201);
+        }, function () {
+            return \response()->json(['message' => ''], 201);
+        });
     }
 
-    public function update(Request $req)
+    public function update(Request $req): Response
     {
         $form = Validator::make($req->all(), [
             'id' => 'integer|required|exists:quests,id',
@@ -71,31 +72,31 @@ class QuestController extends Controller
             'points' => $req->points
         ]);
 
-        if (!$quest) {
+        return $quest->whenEmpty(function () {
             return \response()->json(['message' => 'Não foi possivel atualizar os dados da tarefa'], 422);
-        }
-
-        return \response()->json(['message' => '', 201]);
+        }, function () {
+            return \response()->json([], 201);
+        });
     }
 
-    public function show(int $id)
+    public function show(int $id): Response
     {
         $quest = Quest::findOrFail($id);
 
         return \response()->json(['message' => '', 'data' => $quest], 200);
     }
 
-    public function check(int $id)
+    public function check(int $id): Response
     {
         $quest = Quest::where('id', $id)->update([
             'completed' => true,
             'completed_at' => \date('Y/m/d H:i:s')
         ]);
 
-        if (!$quest) {
+        return $quest->whenEmpty(function () {
             return \response()->json(['message' => 'Não foi possivel concluir a tarefa'], 422);
-        }
-
-        return \response()->json(['message' => ''], 201);
+        }, function () {
+            return \response()->json([], 201);
+        });
     }
 }

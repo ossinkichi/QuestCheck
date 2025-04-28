@@ -19,6 +19,6 @@ class Quest extends Model
 
     protected $hidden = [
         'created_at',
-        'id_user'
+        'user_id'
     ];
 }
