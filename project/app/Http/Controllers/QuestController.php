@@ -3,13 +3,14 @@
 namespace App\Http\Controllers;
 
 use DateTime;
+use LDAP\Result;
 use App\Models\Quest;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use GuzzleHttp\Psr7\Response;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Validator;
-use LDAP\Result;
 
 class QuestController extends Controller
 {
@@ -27,7 +28,7 @@ class QuestController extends Controller
         });
     }
 
-    public function create(Request $req): Response
+    public function create(Request $req): JsonResponse
     {
         $form = Validator::make($req->all(), [
             'user' => 'integer|required|exists:users,id',
@@ -53,7 +54,7 @@ class QuestController extends Controller
         });
     }
 
-    public function update(Request $req): Response
+    public function update(Request $req): JsonResponse
     {
         $form = Validator::make($req->all(), [
             'id' => 'integer|required|exists:quests,id',
@@ -79,14 +80,14 @@ class QuestController extends Controller
         });
     }
 
-    public function show(int $id): Response
+    public function show(int $id): JsonResponse
     {
         $quest = Quest::findOrFail($id);
 
         return \response()->json(['message' => '', 'data' => $quest], 200);
     }
 
-    public function check(int $id): Response
+    public function check(int $id): JsonResponse
     {
         $quest = Quest::where('id', $id)->update([
             'completed' => true,

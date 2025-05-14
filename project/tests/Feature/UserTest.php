@@ -34,7 +34,10 @@ class UserTest extends TestCase
             'Content-Type' => 'application/json'
         ]);
 
-        $response->assertStatus(200)->assertJson(['message' => '', 'data' => array()]);
+        $response->assertStatus(200)->assertJson(['message' => 'Logado com sucesso!', 'data' => [
+            'name' => 'Jhon Doe',
+            'email' => 'example@gmail.com'
+        ]]);
     }
 
     public function test_update(): void

@@ -29,7 +29,7 @@ class UserController extends Controller
         }
 
         return \response()->json([
-            'message' => '',
+            'message' => 'Logado com sucesso!',
             'data' => $user
         ], 200);
     }
