@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -30,7 +31,7 @@ class UserController extends Controller
 
         return \response()->json([
             'message' => 'Logado com sucesso!',
-            'data' => $user
+            'data' => new UserResource($user)
         ], 200);
     }
 
@@ -57,7 +58,7 @@ class UserController extends Controller
             return \response()->json(['message' => 'Erro ao criar usuário'], 500);
         }
 
-        return \response()->json(['message' => '', 201]);
+        return \response()->json([], 201);
     }
 
     public function update(Request $req)
@@ -81,7 +82,7 @@ class UserController extends Controller
             return \response()->json(['message' => 'Erro ao atualizar os dados do usuário'], 500);
         }
 
-        return \response()->json(['message' => '', 201]);
+        return \response()->json([], 201);
     }
 
     public function show(int $id)

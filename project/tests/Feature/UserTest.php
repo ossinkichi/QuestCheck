@@ -22,7 +22,7 @@ class UserTest extends TestCase
             'Content-Type' => 'application/json'
         ]);
 
-        $response->assertStatus(201)->assertJson(['message' => '']);
+        $response->assertStatus(201)->assertJson([]);
     }
 
     public function test_login(): void
@@ -35,8 +35,10 @@ class UserTest extends TestCase
         ]);
 
         $response->assertStatus(200)->assertJson(['message' => 'Logado com sucesso!', 'data' => [
+            'id' => 1,
             'name' => 'Jhon Doe',
-            'email' => 'example@gmail.com'
+            'email' => 'example@gmail.com',
+            'created_at' => '2023-10-01T00:00:00.000000Z',
         ]]);
     }
 
@@ -49,7 +51,7 @@ class UserTest extends TestCase
             'Content-Type' => 'application/json'
         ]);
 
-        $response->assertStatus(200)->assertJson(['message' => '', 'user' => array()]);
+        $response->assertStatus(201)->assertJson([]);
     }
 
     public function test_show(): void
