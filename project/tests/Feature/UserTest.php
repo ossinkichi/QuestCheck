@@ -63,6 +63,16 @@ class UserTest extends TestCase
             'Content-Type' => 'application/json'
         ]);
 
-        $response->assertStatus(200)->assertJson(['message' => '', 'user' => array()]);
+        $response->assertStatus(200)->assertJson(
+            [
+                'message' => 'Usúario encontrado',
+                'user' => [
+                    'id' => 1,
+                    'name' => 'Jhon Doe',
+                    'email' => 'example@gmail.com',
+                    'created_at' => '2023-10-01T00:00:00.000000Z'
+                ]
+            ]
+        );
     }
 }

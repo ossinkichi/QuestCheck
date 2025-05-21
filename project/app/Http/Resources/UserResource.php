@@ -19,6 +19,12 @@ class UserResource extends JsonResource
                 'id' => $request->id,
                 'name' => $request->name,
                 'email' => $request->email,
+                'rank' => $request->rank,
+                'points' => $request->points,
+                'avatar' => $request->avatar,
+                'email_verified_at' => $request->email_verified_at,
+                'remember_token' => $request->remember_token,
+                'updated_at' => $request->updated_at,
                 'created_at' => $request->created_at,
             ];
     }

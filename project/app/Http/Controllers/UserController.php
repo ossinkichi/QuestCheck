@@ -31,7 +31,10 @@ class UserController extends Controller
 
         return \response()->json([
             'message' => 'Logado com sucesso!',
-            'data' => new UserResource($user)
+            'data' => [
+                'id' => $user->id,
+                'name' => $user->name,
+            ]
         ], 200);
     }
 
