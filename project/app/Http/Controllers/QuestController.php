@@ -8,6 +8,7 @@ use App\Models\Quest;
 use Illuminate\Http\Request;
 use GuzzleHttp\Psr7\Response;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\QuestResource;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Validator;
@@ -23,7 +24,8 @@ class QuestController extends Controller
             return \response()->json(['message' => 'Nenhuma tarefa encontrada!'], 404);
         }, function ($quests) {
             return \response()->json([
-                'data' => $quests
+                'message' => 'Tarefas encontradas!',
+                'data' => \array_map(fn($quest) => new QuestResource($quest), $quests->all())
             ], 200);
         });
     }
@@ -44,7 +46,8 @@ class QuestController extends Controller
         $quest = Quest::create([
             'title' => $req->title,
             'description' => $req->description,
-            'user_id' => $req->user
+            'user_id' => $req->user,
+            'points' => $req->points,
         ]);
 
         return $quest->whenEmpty(function () {
@@ -84,7 +87,7 @@ class QuestController extends Controller
     {
         $quest = Quest::findOrFail($id);
 
-        return \response()->json(['message' => '', 'data' => $quest], 200);
+        return \response()->json(['message' => 'Tarefa encontrada!', 'data' => new QuestResource($quest)], 200);
     }
 
     public function check(int $id): JsonResponse
@@ -96,6 +99,20 @@ class QuestController extends Controller
 
         return $quest->whenEmpty(function () {
             return \response()->json(['message' => 'Não foi possivel concluir a tarefa'], 422);
+        }, function () {
+            return \response()->json([], 201);
+        });
+    }
+
+    public function failed(int $id): JsonResponse
+    {
+        $quest = Quest::where('id', $id)->update([
+            'completed' => false,
+            'completed_at' => null
+        ]);
+
+        return $quest->whenEmpty(function () {
+            return \response()->json(['message' => 'Não foi possivel falhar na tarefa']);
         }, function () {
             return \response()->json([], 201);
         });
