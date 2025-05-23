@@ -8,7 +8,7 @@ use App\Http\Controllers\QuestController;
 Route::post('/user/login', [UserController::class, 'login']);
 Route::post('/user/register', [UserController::class, 'register']);
 Route::put('/user/update', [UserController::class, 'update']);
-Route::post('/user/show/{id}', [UserController::class, 'show']);
+Route::get('/user/show/{id}', [UserController::class, 'show']);
 
 // Quest routes
 Route::get('/quests/{id}', [QuestController::class, 'index']);

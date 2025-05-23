@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Hash;
@@ -15,7 +16,7 @@ class UserController extends Controller
     public function login(Request $req)
     {
         $form = Validator::make($req->all(), [
-            'email' => 'required|email',
+            'email' => 'required|email|string',
             'password' => 'required|min:8'
         ]);
 
@@ -24,6 +25,8 @@ class UserController extends Controller
         }
 
         $user = User::where('email', $req->email)->first();
+
+        \dd($user);
 
         if (!$user || !Hash::check($req->password, $user->password)) {
             return \response()->json(['message' => 'Email ou senha inválidos'], 401);
@@ -67,9 +70,14 @@ class UserController extends Controller
     public function update(Request $req)
     {
         $form = Validator::make($req->all(), [
-            'id' => 'integer|required|exists.users,id',
+            'id' => 'integer|required|exists:users,id',
             'name' => 'string|required|min:3',
-            'email' => 'string|email|required|unique:users,email,' . $req->user()->id,
+            'email' => [
+                'required',
+                'string',
+                'email',
+                Rule::unique('users', 'email')->ignore($req->id),
+            ]
         ]);
 
         if ($form->fails()) {
@@ -93,8 +101,8 @@ class UserController extends Controller
         $user = User::findOrFail($id);
 
         return \response()->json([
-            'message' => '',
-            'data' => $user
+            'message' => 'Usúario encontrado!',
+            'data' => new UserResource($user),
         ], 200);
     }
 }
