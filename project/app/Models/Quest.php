@@ -12,13 +12,11 @@ class Quest extends Model
 
     protected $fillable = [
         'title',
-        'content',
+        'description',
         'completed',
-        'completed_at'
-    ];
-
-    protected $hidden = [
-        'created_at',
+        'completed_at',
         'user_id'
     ];
+
+    protected $hidden = [];
 }

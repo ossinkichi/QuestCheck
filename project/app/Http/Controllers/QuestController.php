@@ -2,21 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use DateTime;
-use LDAP\Result;
 use App\Models\Quest;
 use Illuminate\Http\Request;
-use GuzzleHttp\Psr7\Response;
+use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\QuestResource;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Validator;
 
 class QuestController extends Controller
 {
 
-    public function index(int $id)
+    public function index(int $id): JsonResponse
     {
         $quests = Quest::where('user_id', $id)->get();
 
@@ -44,23 +40,24 @@ class QuestController extends Controller
         }
 
         $quest = Quest::create([
+            'user_id' => $req->user,
             'title' => $req->title,
             'description' => $req->description,
-            'user_id' => $req->user,
             'points' => $req->points,
         ]);
 
-        return $quest->whenEmpty(function () {
-            return \response()->json(['message' => 'Não foi possivel criar a tarefa'], 500);
-        }, function () {
-            return \response()->json(['message' => ''], 201);
-        });
+        if (!$quest) {
+            return \response()->json(['message' => 'Não foi possivel criar a tarefa'], 422);
+        }
+
+        return \response()->json([], 201);
     }
 
     public function update(Request $req): JsonResponse
     {
         $form = Validator::make($req->all(), [
-            'id' => 'integer|required|exists:quests,id',
+            'quest' => 'integer|required|exists:quests,id',
+            'user' => 'integer|required|exists:quests,user_id',
             'title' => 'string|required|min:5',
             'description' => 'string|required',
             'points' => 'integer|optional'
@@ -70,51 +67,48 @@ class QuestController extends Controller
             return \response()->json($form->errors(), 422);
         }
 
-        $quest = Quest::where('id', $req->id)->update([
+        $payload = Quest::where('user_id', $req->user)->where('id', $req->quest)->update([
             'title' => $req->title,
             'description' => $req->description,
-            'points' => $req->points
+            'points' => $req->points ?? 0,
         ]);
 
-        return $quest->whenEmpty(function () {
-            return \response()->json(['message' => 'Não foi possivel atualizar os dados da tarefa'], 422);
-        }, function () {
-            return \response()->json([], 201);
-        });
+        if (!$payload) {
+            return \response()->json(['message' => 'Não foi possivel atualizar os dados da tarefa'], 401);
+        }
+        return \response()->json([], 201);
     }
 
-    public function show(int $id): JsonResponse
+    public function show(int $user, int $quest): JsonResponse
     {
-        $quest = Quest::findOrFail($id);
+        $payload = Quest::where('user_id', $user)->findOrFail($quest);
 
-        return \response()->json(['message' => 'Tarefa encontrada!', 'data' => new QuestResource($quest)], 200);
+        return \response()->json(['message' => 'Tarefa encontrada!', 'data' => new QuestResource($payload)], 200);
     }
 
-    public function check(int $id): JsonResponse
+    public function check(int $user, int $quest): JsonResponse
     {
-        $quest = Quest::where('id', $id)->update([
+        $payload = Quest::where('id', $quest)->where('user_id', $user)->where('failed_at', null)->update([
             'completed' => true,
             'completed_at' => \date('Y/m/d H:i:s')
         ]);
 
-        return $quest->whenEmpty(function () {
+        if (!$payload) {
             return \response()->json(['message' => 'Não foi possivel concluir a tarefa'], 422);
-        }, function () {
-            return \response()->json([], 201);
-        });
+        }
+        return \response()->json([], 201);
     }
 
-    public function failed(int $id): JsonResponse
+    public function failed(int $user, int $quest): JsonResponse
     {
-        $quest = Quest::where('id', $id)->update([
+        $payload = Quest::where('id', $quest)->where('user_id', $user)->where('completed_at', null)->update([
             'completed' => false,
-            'completed_at' => null
+            'failed_at' => \date('Y/m/d H:i:s')
         ]);
 
-        return $quest->whenEmpty(function () {
-            return \response()->json(['message' => 'Não foi possivel falhar na tarefa']);
-        }, function () {
-            return \response()->json([], 201);
-        });
+        if (!$payload) {
+            return \response()->json(['message' => 'Não foi possivel falhar na tarefa'], 422);
+        }
+        return \response()->json([], 201);
     }
 }

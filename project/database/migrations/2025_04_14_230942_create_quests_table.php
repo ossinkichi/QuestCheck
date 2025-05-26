@@ -18,8 +18,9 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->integer('points')->default(0);
             $table->boolean('completed')->default(false);
-            $table->time('completed_at')->nullable();
-            $table->timestamp('created_at');
+            $table->timestamp('completed_at')->nullable();
+            $table->timestamp('failed_at')->nullable();
+            $table->timestamps();
         });
     }
 
