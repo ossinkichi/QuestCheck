@@ -1,18 +1,3 @@
-<?php
-    session_start();
-    if(!isset($_SESSION['id'])){
-    
-        // print_r($_SESSION);
-        header('location: login.php');
-    
-    }else{
-    require_once 'config/conexao.php';
-    require_once 'config/function.php';
-    require_once 'config/variables.php';
-
-    $agr = new DateTime();
-    $agr->format('H:i:s');
-?>
 <!doctype html>
 <html lang="pt-br">
     <head>
@@ -47,7 +32,7 @@
             </div>
         </div>
 
-            
+
 
         <div class="container mt-3 mx-3  " style="width: 500px; height: 400px; ">
             <div class="btn-group row" role="group" style="width: 100%; margin-left: 11px;">
@@ -56,7 +41,7 @@
                 <button class="fail btn btn-danger text-light col-3">Falhas</button>
             </div>
             <div class="bg-light rounded-2 p-3" style="width: 500px; height: 400px; overflow-y: auto;">
-            
+
                 <div class="row container-fluid">
                     <h3 class="mx-3 col-10">Quests</h3>
                     <a href="task.php" class="col-1">
@@ -67,59 +52,40 @@
                     </a>
                 </div>
                 <div class="list-group quest" id="con" style="display: none;">
-
-                    <?php
-                        for($i = 0; $i < count($questsuccess); $i++){
-                                ?>
                                     <a class="bg list-group-item list-group-item-action mb-3">
                                         <div class="d-flex w-100 justify-content-between">
-                                            <h5 class="mb-1 text-success"><?=$questsuccess[$i]['quest_name'] ?? null ?></h5>
-                                            
+                                            <h5 class="mb-1 text-success">Name</h5>
+
                                         </div>
-                                <?php
-                                    }
-                    ?>
                                     </a>
 
                 </div>
 
                 <div class="list-group quest" id="fail" style="display: none;">
-                    <?php
-                        for($i = 0; $i < count($questfail); $i++){
-                    ?>
                                     <a class="bg list-group-item list-group-item-action mb-3">
                                         <div class="d-flex w-100 justify-content-between">
-                                            <h5 class="mb-1 text-danger"><?=$questfail[$i]['quest_name'] ?? null?></h5>
+                                            <h5 class="mb-1 text-danger">Fail</h5>
                                         </div>
-                                        <?php
-                                            }
-                                        ?>
                                     </a>
-                    
+
                 </div>
 
                 <div class="list-group quest" id="and">
 
-                    <?php
-                        for($i = 0; $i < count($quest); $i++){
-                                ?>
                                     <!-- <a class="bg list-group-item list-group-item-action p-3 mb-2"> -->
                                         <div class="bg list-group-item list-group-item-action p-3 mb-2 ">
                                             <div class="d-flex w-100 justify-content-between">
-                                                <h5 class="mb-1"><?=$quest[$i]['quest_name'] ?? 'undefined'?></h5>      
+                                                <h5 class="mb-1">name</h5>
                                                 <div>
-                                                    <a class="btn btn-success" href="./config/count.php?add=<?= $quest[$i]['id']?>"></a>
-                                                    <a class="btn btn-danger" href="./config/fail.php?add=<?= $quest[$i]['id']?>"></a>
+                                                    <a class="btn btn-success"</a>
+                                                    <a class="btn btn-danger"</a>
                                                 </div>
                                             </div>
                                         </div>
-                                <?php
-                                }
-                    ?>
 
                 </div>
 
-               
+
 
             </div>
         </div>
@@ -129,8 +95,3 @@
         <script src="./js/quest.js"></script>
     </body>
 </html>
-<?php } 
-    if($agr == '00:00:00'){
-       // header('location: clean.php');
-    }
-?>
