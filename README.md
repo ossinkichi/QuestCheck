@@ -62,7 +62,7 @@ Siga o passo a passo abaixo para instalar e rodar o QuestCheck localmente:
 
 Pronto! O QuestCheck estará disponível em http://localhost:8000 ou na porta definida pelo Laravel.
 
----
+`**Obs**`: apenas a api está pronta, infelizmente a o front ainda não foi refeito.
 
 ## License
 
