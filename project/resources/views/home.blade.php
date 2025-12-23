@@ -6,10 +6,21 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Degen Tasks</title>
 
-            <!-- Scripts -->
-            @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <!-- Scripts -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="bg-neutral-800">
+
+    <header>
+        <div class="flex justify-between items-center p-4 bg-neutral-900">
+            <div class="flex items-center gap-2">
+                <img src="{{ asset('images/logo.png') }}" alt="Logo Degen Tasks" class="w-12 h-12">
+                <h1 class="text-2xl text-amber-100">Degen Tasks</h1>
+            <button>Entrar</button>
+            <button>Registrar-se</button>
+        </div>
+    </header>
+
     <section class="text-amber-100 grid-cols-2 grid place-items-center gap-4">
         <div class="flex flex-col gap-1.5">
             <img src="{{ asset('images/logo.png') }}" alt="Logo Degen Tasks" class="w-48 h-48 mb-4">
