@@ -1,15 +1,13 @@
-import SignIn from "../components/SignInForm";
 import Header from "../components/Header";
+import SignIn from "../components/SignInForm";
+import SignUp from "../components/SignUpForm";
 
 export default function Home() {
+	const showForm = "SignIn";
 	return (
 		<div>
 			<Header></Header>
-			<main className="mt-32">
-				<div className="p-6 border-3 border-white/10 rounded-lg max-w-md mx-auto mt-10 bg-gray-200">
-					<SignIn></SignIn>
-				</div>
-			</main>
+			<main>{showForm == "SignIn" ? <SignIn></SignIn> : <SignUp></SignUp>}</main>
 		</div>
 	);
 }
