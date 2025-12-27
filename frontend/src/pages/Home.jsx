@@ -1,13 +1,16 @@
+import React from "react";
 import Header from "../components/Header";
 import SignIn from "../components/SignInForm";
 import SignUp from "../components/SignUpForm";
 
-export default function Home() {
-	const showForm = "SignIn";
+const Home = () => {
+	const showForm = "Sign";
 	return (
 		<div>
-			<Header></Header>
-			<main>{showForm == "SignIn" ? <SignIn></SignIn> : <SignUp></SignUp>}</main>
+			<Header />
+			<main>{showForm == "SignIn" ? <SignIn /> : <SignUp />}</main>
 		</div>
 	);
-}
+};
+
+export default Home;

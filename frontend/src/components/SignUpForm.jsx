@@ -1,6 +1,6 @@
-import { useState } from "react";
+import React from "react";
 
-export default function SingUp() {
+const SingUp = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [username, setUsername] = useState("");
@@ -80,4 +80,6 @@ export default function SingUp() {
 			</p>
 		</div>
 	);
-}
+};
+
+export default SingUp;

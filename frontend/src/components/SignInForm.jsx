@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function SignIn() {
+const SignIn = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [error, setError] = useState("");
@@ -58,4 +58,6 @@ export default function SignIn() {
 			</p>
 		</div>
 	);
-}
+};
+
+export default SignIn;
