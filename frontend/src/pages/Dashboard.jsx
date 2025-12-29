@@ -4,7 +4,7 @@ import TaskList from "../components/TaskList";
 const Dashboard = () => {
 	return (
 		<div>
-			<TaskList task={[]} />
+			<TaskList />
 		</div>
 	);
 };

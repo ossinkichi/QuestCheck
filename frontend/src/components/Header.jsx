@@ -11,13 +11,17 @@ const Header = () => {
 					className="cursor-pointer py-2 px-4 rounded-md
                 text-base hover:bg-green-600 transition-all transition-discrete duration-500"
 				>
-					Entrar
+					<a className="no-underline" href="/login">
+						Entrar
+					</a>
 				</button>
 				<button
 					className="cursor-pointer py-2 px-4 rounded-md
                 text-base hover:bg-green-600 transition-all transition-discrete duration-500"
 				>
-					Cadastre-se
+					<a className="no-underline" href="/register">
+						Cadastre-se
+					</a>
 				</button>
 			</nav>
 		</header>
