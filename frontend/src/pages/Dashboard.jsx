@@ -6,7 +6,9 @@ const Dashboard = () => {
 	return (
 		<>
 			<HeaderAuthenticate />
-			<TaskList />
+			<main>
+				<TaskList />
+			</main>
 		</>
 	);
 };

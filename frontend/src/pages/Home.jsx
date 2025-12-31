@@ -1,14 +1,14 @@
 import React from "react";
 import Header from "../components/Header";
-import SignIn from "../components/SignInForm";
-import SignUp from "../components/SignUpForm";
+import { Outlet } from "react-router";
 
 const Home = () => {
-	const showForm = "Sign";
 	return (
 		<div>
 			<Header />
-			<main>{showForm == "SignIn" ? <SignIn /> : <SignUp />}</main>
+			<main>
+				<Outlet />
+			</main>
 		</div>
 	);
 };

@@ -9,24 +9,24 @@ const TaskList = () => {
 	];
 
 	return (
-		<>
-			<table>
-				<thead>
+		<div className="max-w-5xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
+			<table className="w-full text-sm text-left text-gray-600">
+				<thead className="bg-gray-800 text-white uppercase text-xs">
 					<tr>
-						<th>Titulo</th>
-						<li>Status</li>
+						<th className="px-6 py-3">Titulo</th>
+						<th className="px-6 py-3">Status</th>
 					</tr>
 				</thead>
 				<tbody>
 					{tasks.map((task, index) => (
-						<tr key={index}>
+						<tr className="border-b hover:bg-gray-50" key={index}>
 							<td>{task.title}</td>
-							<td>{task.complete}</td>;
+							<td>{task.complete ? "Concluida" : "Pendente"}</td>
 						</tr>
 					))}
 				</tbody>
 			</table>
-		</>
+		</div>
 	);
 };
 
