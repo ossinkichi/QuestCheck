@@ -1,20 +1,28 @@
 import React from "react";
 
-const TaskList = (tasks) => {
-
-    const tasks = [
-        {title:"Limpar a casa", complete: false},
-        {title:"Limpar a cama", complete: true},
-        {title:"Comprar um carro", complete: true},
-        {title:"Pegar gold no lol", complete: false},
-    ]
+const TaskList = () => {
+	const tasks = [
+		{ title: "Limpar a casa", complete: false },
+		{ title: "Limpar a cama", complete: true },
+		{ title: "Comprar um carro", complete: true },
+		{ title: "Pegar gold no lol", complete: false },
+	];
 	return (
 		<>
-			<ul>
-                {tasks.map() = (task) =>
-				<li>{task.title}</li>
-                }
-			</ul>
+			<thead>
+				<ul>
+					{tasks.map((task) => {
+						<li key={task.index}></li>;
+					})}
+				</ul>
+			</thead>
+			<tbody>
+				<ul>
+					{tasks.map((task) => (
+						<li key={task.title}>{task}</li>
+					))}
+				</ul>
+			</tbody>
 		</>
 	);
 };
