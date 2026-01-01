@@ -9,9 +9,25 @@ const TaskList = () => {
 	];
 
 	return (
-		<div className="max-w-5xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
-			<table className="w-full text-sm text-left text-gray-600">
-				<thead className="bg-gray-800 text-white uppercase text-xs">
+		<div className="max-w-5xl mx-auto mt-20 bg-white shadow-lg rounded-lg overflow-hidden p-4">
+			<ul>
+				{tasks.map((task) => {
+					return (
+						<div className="">
+							<li className="text-black">
+								<div className="flex justify-between">
+									<p>{task.title}</p>
+									<span className={task.complete ? "text-green-400" : "text-red-600"}>
+										{task.complete ? "Concluido" : "Pendente"}
+									</span>
+								</div>
+							</li>
+						</div>
+					);
+				})}
+			</ul>
+			{/* <table className="w-full text-sm text-left text-gray-600">
+				<thead className="uppercase text-xs">
 					<tr>
 						<th className="px-6 py-3">Titulo</th>
 						<th className="px-6 py-3">Status</th>
@@ -25,7 +41,7 @@ const TaskList = () => {
 						</tr>
 					))}
 				</tbody>
-			</table>
+			</table> */}
 		</div>
 	);
 };
