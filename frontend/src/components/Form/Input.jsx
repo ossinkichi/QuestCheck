@@ -1,17 +1,28 @@
 import React from "react";
 
-const Input = ({ label, inputType, inputValue, inputPlaceholder, ...props }) => {
+const Input = ({
+	id,
+	label,
+	inputType = "text",
+	inputValue,
+	inputPlaceholder,
+	inputStyle,
+	required = false,
+	event,
+	...rest
+}) => {
 	return (
 		<div className="flex flex-col gap-1 p-2">
-			<label htmlFor={props.id}>{label}</label>
+			<label htmlFor={id}>{label}</label>
 			<input
-				id={props.id}
-				className={("p-2 rounded-md", props.class)}
+				id={id}
+				className={`p-2 rounded-md ${inputStyle ?? ""}`}
 				type={inputType}
 				value={inputValue}
-				onChange={props.event}
+				onChange={event}
 				placeholder={inputPlaceholder}
-				props
+				required={required}
+				{...rest}
 			/>
 		</div>
 	);

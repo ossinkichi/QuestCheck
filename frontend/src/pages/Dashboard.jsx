@@ -1,13 +1,13 @@
 import React from "react";
-import TaskList from "../components/TaskList";
 import HeaderAuthenticate from "../components/HeaderAuthenticate";
+import { Outlet } from "react-router";
 
 const Dashboard = () => {
 	return (
 		<>
 			<HeaderAuthenticate />
 			<main>
-				<TaskList />
+				<Outlet />
 			</main>
 		</>
 	);

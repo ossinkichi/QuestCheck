@@ -2,6 +2,10 @@ import Home from "./pages/Home";
 import SignIn from "./components/Form/SignInForm";
 import SingUp from "./components/Form/SignUpForm";
 import Dashboard from "./pages/Dashboard";
+import { Component } from "react";
+import TaskList from "./components/TaskList";
+import FormTaskRegister from "./components/Form/FormTaskRegister";
+import DashboardLayout from "./layouts/DashboardLayout";
 
 const routes = [
 	{
@@ -25,6 +29,16 @@ const routes = [
 	{
 		path: "dashboard",
 		Component: Dashboard,
+		children: [
+			{
+				index: true,
+				Component: DashboardLayout,
+			},
+			{
+				path: "create",
+				Component: FormTaskRegister,
+			},
+		],
 	},
 ];
 
