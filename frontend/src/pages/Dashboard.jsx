@@ -1,11 +1,10 @@
-import React from "react";
-import HeaderAuthenticate from "../components/HeaderAuthenticate";
 import { Outlet } from "react-router";
+import Header from "../components/Header";
 
 const Dashboard = () => {
 	return (
 		<>
-			<HeaderAuthenticate />
+			<Header />
 			<main>
 				<Outlet />
 			</main>

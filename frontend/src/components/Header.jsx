@@ -8,19 +8,19 @@ const Header = () => {
 			</div>
 			<nav className="flex gap-6">
 				<button
-					className="cursor-pointer py-2 px-4 rounded-md
-                text-base hover:bg-green-600 transition-all transition-discrete duration-500"
+					className="cursor-pointer py-2 px-6 rounded-md
+                text-base hover:bg-emerald-600 transition-all transition-discrete duration-500"
 				>
-					<a className="no-underline" href="/login">
-						Entrar
+					<a className="no-underline" href="/dashboard/create">
+						Criar nova tarefa
 					</a>
 				</button>
 				<button
-					className="cursor-pointer py-2 px-4 rounded-md
-                text-base hover:bg-green-600 transition-all transition-discrete duration-500"
+					className="cursor-pointer py-2 px-6 rounded-md
+                text-base hover:bg-rose-500 transition-all transition-discrete duration-500"
 				>
-					<a className="no-underline" href="/register">
-						Cadastre-se
+					<a className="no-underline" href="#logout">
+						Sair
 					</a>
 				</button>
 			</nav>
