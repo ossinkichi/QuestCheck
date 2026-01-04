@@ -22,10 +22,10 @@ class QuestResource extends JsonResource
             'title' => $this->title,
             'description' => $this->description,
             'points' => $this->points,
-            'completed' => $this->completed,
+            'limit_hours' => $this->limit_hours,
+            'limit_date' => $this->limit_date,
             'completed_at' => $this->completed_at !== null ? $completed_at->format('d/m/Y') : null,
             'failed_at' => $this->failed_at !== null ? $failed_at->format('d/m/Y') : null,
-            'updated_at' => $this->updated_at->format('d/m/Y'),
             'created_at' => $this->created_at->format('d/m/Y'),
         ];
     }

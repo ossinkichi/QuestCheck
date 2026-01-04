@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources;
 
-use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -22,7 +21,6 @@ class UserResource extends JsonResource
                 'name' => $this->name,
                 'email' => $this->email,
                 'rank' => $this->rank,
-                'points' => $this->points,
                 'avatar' => $this->avatar,
                 'email_verified_at' => $this->email_verified_at,
                 'remember_token' => $this->remember_token,

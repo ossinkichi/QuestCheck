@@ -16,7 +16,6 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('title')->required();
             $table->text('description')->nullable();
-            // $table->integer('points')->default(0);
             $table->text("limit_hours")->nullable();
             $table->text("limit_date")->nullable();
             $table->timestamp('completed_at')->nullable();

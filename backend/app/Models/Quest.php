@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Symfony\Component\VarDumper\Caster\Caster;
 
 class Quest extends Model
 {
@@ -11,12 +12,25 @@ class Quest extends Model
     use HasFactory;
 
     protected $fillable = [
+        'id',
+        'user_id',
         'title',
         'description',
-        'completed',
+        'limit_hours',
+        'limit_date',
         'completed_at',
-        'user_id'
+        'failed_at',
+        'created_at'
     ];
 
-    protected $hidden = [];
+    protected $hidden = [
+        "updated_at"
+    ];
+
+    protected $casts = [
+        'limit_date' => 'datetime',
+        'completed_at' => 'datetime',
+        'failed_at' => 'datetime',
+        'created_at' => 'datetime',
+    ];
 }

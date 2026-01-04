@@ -32,7 +32,8 @@ class QuestController extends Controller
             'user' => 'integer|required|exists:users,id',
             'title' => 'string|required|min:5',
             'description' => 'string|required',
-            'points' => 'integer|optional'
+            'limit_hours' => 'string|optional',
+            'limit_date' => 'string|optional'
         ]);
 
         if ($form->fails()) {
@@ -43,7 +44,8 @@ class QuestController extends Controller
             'user_id' => $req->user,
             'title' => $req->title,
             'description' => $req->description,
-            'points' => $req->points,
+            'limit_hours' => $req->limit_hours,
+            'limit_date' => $req->limit_date,
         ]);
 
         if (!$quest) {
@@ -58,9 +60,7 @@ class QuestController extends Controller
         $form = Validator::make($req->all(), [
             'quest' => 'integer|required|exists:quests,id',
             'user' => 'integer|required|exists:quests,user_id',
-            'title' => 'string|required|min:5',
             'description' => 'string|required',
-            'points' => 'integer|optional'
         ]);
 
         if ($form->fails()) {
@@ -68,9 +68,7 @@ class QuestController extends Controller
         }
 
         $payload = Quest::where('user_id', $req->user)->where('id', $req->quest)->update([
-            'title' => $req->title,
             'description' => $req->description,
-            'points' => $req->points ?? 0,
         ]);
 
         if (!$payload) {
@@ -88,8 +86,7 @@ class QuestController extends Controller
 
     public function check(int $user, int $quest): JsonResponse
     {
-        $payload = Quest::where('id', $quest)->where('user_id', $user)->where('failed_at', null)->update([
-            'completed' => true,
+        $payload = Quest::where('user_id', $user)->where('id', $quest)->where('failed_at', null)->update([
             'completed_at' => \date('Y/m/d H:i:s')
         ]);
 
@@ -102,7 +99,6 @@ class QuestController extends Controller
     public function failed(int $user, int $quest): JsonResponse
     {
         $payload = Quest::where('id', $quest)->where('user_id', $user)->where('completed_at', null)->update([
-            'completed' => false,
             'failed_at' => \date('Y/m/d H:i:s')
         ]);
 
