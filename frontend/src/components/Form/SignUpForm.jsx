@@ -1,75 +1,87 @@
-import { React, useState } from "react";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
+import registerSchema from "../../../validation/RegisterSchema";
+import authUser from "../../../services/Auth.service";
 
 const SingUp = () => {
-	const [email, setEmail] = useState("");
-	const [password, setPassword] = useState("");
-	const [username, setUsername] = useState("");
-	const [error, setError] = useState("");
+	const {
+		register,
+		handleSubmit,
+		reset,
+		formState: { errors, isSubmitting },
+	} = useForm({
+		resolver: yupResolver(registerSchema),
+	});
 
-	function handleSubmit(e) {
-		e.preventDefault();
-
-		if (!email || !username || !password) {
-			setError("Preencha todos os campos");
-			return;
+	async function onSubmit(data) {
+		try {
+			const res = await authUser(data);
+			console.log(res);
+			reset();
+		} catch (error) {
+			if (error.response) {
+				console.error(error.response.data.message || "Erro ao criar usuário.");
+				return;
+			}
+			console.error("Erro ao conectar ao servidor.");
 		}
-
-		setError("");
-		console.log("Form submitted:", { email: email, username: username, password: password });
-
-		return;
 	}
 
 	return (
 		<div className="p-6  border-3 border-white/10 rounded-lg max-w-md mx-auto mt-10 bg-gray-200 ">
-			<form action="" method="post" className="flex flex-col gap-2" onSubmit={handleSubmit}>
-				{error && <p>{error}</p>}
+			<form
+				action=""
+				method="post"
+				className="flex flex-col gap-2"
+				onSubmit={handleSubmit(onSubmit)}
+			>
 				<p className="text-center text-3xl text-green-600 font-bold mb-2">Criar conta</p>
 				<div className="flex flex-col gap-1 p-2">
 					<label htmlFor="">Insira seu email:</label>
 					<input
 						className="p-2 rounded-md"
 						type="email"
-						value={email}
-						onChange={(e) => setEmail(e.target.value)}
+						{...register("email")}
 						placeholder="seu@email.com"
 					/>
+					{errors.email && <span>{errors.email.message}</span>}
 				</div>
 				<div className="flex flex-col gap-1 p-2">
 					<label htmlFor="">Insira seu nome de usuário:</label>
 					<input
 						className="p-2 rounded-md"
 						type="text"
-						value={username}
-						onChange={(e) => setUsername(e.target.value)}
+						{...register("name")}
 						placeholder="Usuário"
 					/>
+					{errors.name && <span>{errors.name.message}</span>}
 				</div>
 				<div className="flex flex-col gap-1 p-2">
 					<label htmlFor="">Insira uma senha:</label>
 					<input
 						className="p-2 rounded-md"
 						type="password"
-						value={password}
-						onChange={(e) => setPassword(e.target.value)}
+						{...register("password")}
 						placeholder="********"
 					/>
+					{errors.password && <span>{errors.password.message}</span>}
 				</div>
 				<div className="flex flex-col gap-1 p-2">
 					<label htmlFor="">Confirme sua senha:</label>
 					<input
 						className="p-2 rounded-md"
 						type="password"
-						value={password}
-						onChange={(e) => setPassword(e.target.value)}
+						{...register("passwordConfirmation")}
 						placeholder="********"
 					/>
+					{errors.passwordConfirmation && <span>{errors.passwordConfirmation.message}</span>}
 				</div>
 				<button
 					type="submit"
 					className="border-1 bg-green-600 p-2 rounded-md cursor-pointer text-white text-base font-semibold mt-5 hover:bg-green-700 transition-colors"
+					disabled={isSubmitting}
 				>
-					Cadastrar-se
+					{isSubmitting ? "Cadrastrando..." : "Cadastrar"}
 				</button>
 			</form>
 			<p className="text-center mt-3">

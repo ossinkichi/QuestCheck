@@ -11,7 +11,7 @@ const HeaderAuthenticate = () => {
 					className="cursor-pointer py-2 px-6 rounded-md
                 text-base hover:bg-emerald-600 transition-all transition-discrete duration-500"
 				>
-					<a className="no-underline" href="#logout">
+					<a className="no-underline" href="/dashboard/create">
 						Criar nova tarefa
 					</a>
 				</button>

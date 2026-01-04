@@ -1,60 +1,78 @@
-import { useState } from "react";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
+import loginSchema from "../../../validation/loginSchema";
+// import api from "../../../services/api";
 
 const SignIn = () => {
-	const [email, setEmail] = useState("");
-	const [password, setPassword] = useState("");
-	const [error, setError] = useState("");
+	const {
+		register,
+		handleSubmit,
+		reset,
+		formState: { errors, isSubmitting },
+	} = useForm({
+		resolver: yupResolver(loginSchema),
+	});
 
-	function handleSubmit(e) {
-		e.preventDefault();
-		if (!email || !password) {
-			setError("Preencha todos os campos");
-			return;
+	function onSubmit(data) {
+		try {
+			console.log(data);
+			reset();
+		} catch (erro) {
+			if (erro.response) {
+				console.error(erro.response.message || "Email ou senha inválidos!");
+				return;
+			}
+			console.error("Erro ao conectar ao servidor");
 		}
-
-		setError("");
-		console.log("Form submitted:", { email: email, password: password });
 	}
 
 	return (
 		<div className="p-6 border-3 border-white/10 rounded-lg max-w-md mx-auto mt-10 bg-gray-200 ">
-			<form className="flex flex-col gap-2" action="" method="post" onSubmit={handleSubmit}>
-				{error && <p>{error}</p>}
+			<form
+				className="flex flex-col gap-2"
+				action=""
+				method="post"
+				onSubmit={handleSubmit(onSubmit)}
+			>
 				<p className="text-center text-3xl text-green-600 font-bold">Entrar</p>
 				<div className="flex flex-col gap-1 p-2">
 					<label htmlFor="">Email</label>
 					<input
 						className="p-2 rounded-md"
 						type="email"
-						value={email}
-						onChange={(e) => setEmail(e.target.value)}
+						{...register("email")}
 						placeholder="seu@email.com"
 						required
 					/>
+					{errors.email && <span className="text-rose-600">{errors.email.message}</span>}
 				</div>
 				<div className="flex flex-col gap-1 p-2">
 					<label htmlFor="">Senha</label>
 					<input
 						className="p-2 rounded-md"
 						type="password"
-						value={password}
-						onChange={(e) => setPassword(e.target.value)}
+						{...register("password")}
 						placeholder="********"
 						required
 					/>
+					{errors.password && <span className="text-rose-600">{errors.password.message}</span>}
 				</div>
 				<button
 					type="submit"
 					className="border-1 bg-green-600 p-2 rounded-md cursor-pointer text-white text-base font-semibold mt-5 hover:bg-green-700 transition-colors"
+					disabled={isSubmitting}
 				>
-					Entrar
+					{isSubmitting ? "verificando..." : "Entrar"}
 				</button>
 			</form>
 			<p className="text-center mt-3">
 				Não possui uma conta?{" "}
-				<span className="text-green-700 underline underline-offset-3 hover:text-green-500 transition-all duration-300 cursor-pointer">
+				<a
+					href="/register"
+					className="text-green-700 underline underline-offset-3 hover:text-green-500 transition-all duration-300 cursor-pointer"
+				>
 					Cadastre-se agora!
-				</span>
+				</a>
 			</p>
 		</div>
 	);
