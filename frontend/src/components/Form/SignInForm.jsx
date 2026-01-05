@@ -1,7 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import loginSchema from "../../../validation/loginSchema";
-// import api from "../../../services/api";
 
 const SignIn = () => {
 	const {

@@ -1,55 +1,60 @@
-import React, { useState } from "react";
-import Input from "./Input";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
+import taskSchema from "../../../validation/taskSchema";
 import Button from "./Button";
+import Input from "./Input";
 
 const FormTaskRegister = () => {
-	const [task, setTask] = useState("");
-	const [describe, setDescribe] = useState("");
-	const [time, setTime] = useState("");
-	const [date, setDate] = useState("");
+	const {
+		register,
+		handleSubmit,
+		reset,
+		formState: { errors, isSubmitting },
+	} = useForm({
+		resolver: yupResolver(taskSchema),
+	});
 
-	function handleSubmit(e) {
-		e.preventDefault();
-
-		console.log(task, describe, date, time);
+	function onSubmit(data) {
+		try {
+			console.log(data);
+			reset();
+		} catch (erro) {
+			if (erro.response) {
+				console.error(erro.response.message || "Nào foi possivel criar a tarefa.");
+				return;
+			}
+			console.error("Erro ao conectar ao servidor");
+		}
 	}
 
 	return (
 		<div className="p-6 border-3 border-white/10 rounded-lg max-w-md mx-auto mt-10 bg-gray-200">
-			<form className="flex flex-col gap-2" onSubmit={handleSubmit} action="" method="post">
+			<form
+				className="flex flex-col gap-2"
+				onSubmit={handleSubmit(onSubmit)}
+				action=""
+				method="post"
+			>
 				<p className="text-center text-3xl text-green-500 font-bold">Criar Tarefa</p>
 				<Input
 					id="task"
 					label="Tarefa"
-					inputValue={task}
+					{...register.title}
 					inputPlaceholder="Adicione o titulo da tarefa"
-					event={(e) => setTask(e.target.value)}
 					required={true}
 				/>
+				{errors.task && <span>{errors.title}</span>}
 				<Input
 					id="describe"
 					label="Descrição"
-					inputValue={describe ?? ""}
+					{...register.describe}
 					inputPlaceholder="Descreva a tarefa"
-					event={(e) => setDescribe(e.target.value)}
 				/>
 				<div className="flex">
-					<Input
-						id="dateLimite"
-						label="Data limite"
-						inputType="date"
-						inputValue={date}
-						event={(e) => setDate(e.target.value)}
-					/>
-					<Input
-						id="timeLimit"
-						label="Tempo limite"
-						inputValue={time}
-						inputType="time"
-						event={(e) => setTime(e.target.value)}
-					/>
+					<Input id="dateLimite" label="Data limite" inputType="date" {...register.date} />
+					<Input id="timeLimit" label="Tempo limite" {...register.time} inputType="time" />
 				</div>
-				<Button text="Criar" />
+				<Button text={isSubmitting ? "Criando" : "Criar"} disabled={isSubmitting} />
 			</form>
 		</div>
 	);
