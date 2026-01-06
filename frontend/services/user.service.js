@@ -1,7 +1,7 @@
-import api from "./api";
+import axios from "axios";
 
 async function createUser(data) {
-	const response = await api.post("/user/register", data);
+	const response = await axios.post("http://localhost:8000/api/user/register", data);
 
 	return response;
 }

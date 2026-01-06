@@ -1,7 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
+import createUser from "../../../services/user.service";
 import registerSchema from "../../../validation/RegisterSchema";
-import authUser from "../../../services/Auth.service";
 
 const SingUp = () => {
 	const {
@@ -15,7 +15,8 @@ const SingUp = () => {
 
 	async function onSubmit(data) {
 		try {
-			const res = await authUser(data);
+			const res = await createUser(data);
+			// const res = await axios.post("http://localhost:8000/api/user/register", data);
 			console.log(res);
 			reset();
 		} catch (error) {

@@ -1,5 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
+import authUser from "../../../services/auth.service";
 import loginSchema from "../../../validation/loginSchema";
 
 const SignIn = () => {
@@ -12,9 +13,11 @@ const SignIn = () => {
 		resolver: yupResolver(loginSchema),
 	});
 
-	function onSubmit(data) {
+	async function onSubmit(data) {
 		try {
-			console.log(data);
+			const res = await authUser(data);
+
+			console.log(res);
 			reset();
 		} catch (erro) {
 			if (erro.response) {

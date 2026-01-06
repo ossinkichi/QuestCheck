@@ -45,7 +45,7 @@ class UserController extends Controller
             'name' => 'required|min:3|string',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:8|confirmed|string',
-            'password_confirmation' => 'required|min:8|string'
+            'passwordConfirmation' => 'required|min:8|string'
         ]);
 
         if ($form->fails()) {
