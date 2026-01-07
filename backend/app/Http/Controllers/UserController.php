@@ -44,7 +44,7 @@ class UserController extends Controller
         $form = Validator::make($req->all(), [
             'name' => 'required|min:3|string',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|min:8|confirmed|string',
+            'password' => 'required|min:8|string',
             'passwordConfirmation' => 'required|min:8|string'
         ]);
 
@@ -62,7 +62,13 @@ class UserController extends Controller
             return \response()->json(['message' => 'Erro ao criar usuário'], 500);
         }
 
-        return \response()->json([], 201);
+        return \response()->json([
+            "data" => [
+                "id" => $user->id,
+                "name" => $user->name,
+            ],
+            "message" =>  "Usuario criado com sucesso."
+        ], 201);
     }
 
     public function update(Request $req)

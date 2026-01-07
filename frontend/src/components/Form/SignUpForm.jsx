@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import createUser from "../../../services/user.service";
+import { createUser } from "../../../services/user.service";
 import registerSchema from "../../../validation/RegisterSchema";
 
 const SingUp = () => {
@@ -16,14 +16,16 @@ const SingUp = () => {
 	async function onSubmit(data) {
 		try {
 			const res = await createUser(data);
-			// const res = await axios.post("http://localhost:8000/api/user/register", data);
-			console.log(res);
+
+			console.log(res.data);
+			navigator("/dashboard");
 			reset();
 		} catch (error) {
 			if (error.response) {
 				console.error(error.response.data.message || "Erro ao criar usuário.");
 				return;
 			}
+
 			console.error("Erro ao conectar ao servidor.");
 		}
 	}
@@ -87,9 +89,12 @@ const SingUp = () => {
 			</form>
 			<p className="text-center mt-3">
 				Já possui uma conta?{" "}
-				<span className="text-green-700 underline underline-offset-3 hover:text-green-500 transition-all duration-300 cursor-pointer">
+				<a
+					href="/login"
+					className="text-green-700 underline underline-offset-3 hover:text-green-500 transition-all duration-300 cursor-pointer"
+				>
 					Entrar em minha conta.
-				</span>
+				</a>
 			</p>
 		</div>
 	);

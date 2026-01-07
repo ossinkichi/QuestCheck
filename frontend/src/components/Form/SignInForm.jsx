@@ -17,7 +17,9 @@ const SignIn = () => {
 		try {
 			const res = await authUser(data);
 
-			console.log(res);
+			localStorage.setItem("user", JSON.stringify(res.data));
+			navigator("/dashboard");
+
 			reset();
 		} catch (erro) {
 			if (erro.response) {

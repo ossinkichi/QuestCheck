@@ -10,7 +10,4 @@ function logout() {
 	sessionStorage.clear();
 }
 
-export default {
-	createUser,
-	logout,
-};
+export { createUser, logout };
