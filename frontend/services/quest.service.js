@@ -21,11 +21,13 @@ export function updateDescribeTask(data) {
 
 	return res;
 }
+
 export function checkTask(data) {
 	const res = axios.get(`http://localhost:8000/api/quest/${data.user}/${data.quest}`);
 
 	return res;
 }
+
 export function failTask(data) {
 	const res = axios.get(`http://localhost:8000/api/quest/${data.user}/${data.quest}`);
 

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->text("limit_date")->nullable();
             $table->timestamp('completed_at')->nullable();
             $table->timestamp('failed_at')->nullable();
+            $table->text('status')->default('pending');
             $table->timestamps();
         });
     }

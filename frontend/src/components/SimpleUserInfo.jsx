@@ -1,4 +1,5 @@
-const SimpleUserInfo = (user) => {
+const SimpleUserInfo = ({ user }) => {
+	console.log(user);
 	return (
 		<div className="col-span-1 col-start-5 col-end-7 w-10/12 h-72 flex flex-col gap-10 justify-center items-center mt-20 bg-white shadow-lg rounded-lg overflow-hidden p-6">
 			<p className="font-bold text-2xl text-emerald-700">{user.name}</p>

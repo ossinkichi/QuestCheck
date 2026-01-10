@@ -5,6 +5,7 @@ import Button from "./Button";
 import Input from "./Input";
 
 const FormTaskRegister = () => {
+	const alert = "";
 	const {
 		register,
 		handleSubmit,
@@ -14,8 +15,10 @@ const FormTaskRegister = () => {
 		resolver: yupResolver(taskSchema),
 	});
 
-	function onSubmit(data) {
+	async function onSubmit(data) {
 		try {
+			// const res = await createTask(data);
+
 			console.log(data);
 			reset();
 		} catch (erro) {
@@ -56,6 +59,7 @@ const FormTaskRegister = () => {
 				</div>
 				<Button text={isSubmitting ? "Criando" : "Criar"} disabled={isSubmitting} />
 			</form>
+			{alert ?? <span>{alert}</span>}
 		</div>
 	);
 };
