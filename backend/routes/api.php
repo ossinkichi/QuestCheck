@@ -16,4 +16,4 @@ Route::post('/quest/create', [QuestController::class, 'create']);
 Route::put('/quest/update', [QuestController::class, 'update']);
 Route::get('/quest/show/{user}/{quest}', [QuestController::class, 'show']);
 Route::patch('/quest/check/{user}/{quest}', [QuestController::class, 'check']);
-Route::patch('/quest/failed/{user}/{quest}', [QuestController::class, 'failed']);
+Route::patch('/quest/failed/{user}/{quest}', [QuestController::class, 'fail']);

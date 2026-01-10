@@ -1,9 +1,11 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import authUser from "../../../services/auth.service";
 import loginSchema from "../../../validation/loginSchema";
 
 const SignIn = () => {
+	const navigate = useNavigate();
 	const {
 		register,
 		handleSubmit,
@@ -16,10 +18,9 @@ const SignIn = () => {
 	async function onSubmit(data) {
 		try {
 			const res = await authUser(data);
+			localStorage.setItem("user", JSON.stringify(res.data.data));
 
-			localStorage.setItem("user", JSON.stringify(res.data));
-			navigator("/dashboard");
-
+			navigate("/dashboard");
 			reset();
 		} catch (erro) {
 			if (erro.response) {

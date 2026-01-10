@@ -16,8 +16,8 @@ const SingUp = () => {
 	async function onSubmit(data) {
 		try {
 			const res = await createUser(data);
+			localStorage.setItem("user", JSON.stringify(res.data));
 
-			console.log(res.data);
 			navigator("/dashboard");
 			reset();
 		} catch (error) {
