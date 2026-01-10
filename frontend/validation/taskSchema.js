@@ -1,6 +1,7 @@
 import * as yup from "yup";
 
 const taskSchema = yup.object({
+	user: yup.required(),
 	title: yup
 		.string()
 		.required("O titulo é obrigatório.")

@@ -1,11 +1,9 @@
-import Home from "./pages/Home";
+import FormTaskRegister from "./components/Form/FormTaskRegister";
 import SignIn from "./components/Form/SignInForm";
 import SingUp from "./components/Form/SignUpForm";
-import Dashboard from "./pages/Dashboard";
-import { Component } from "react";
-import TaskList from "./components/TaskList";
-import FormTaskRegister from "./components/Form/FormTaskRegister";
 import DashboardLayout from "./layouts/DashboardLayout";
+import Dashboard from "./pages/Dashboard";
+import Home from "./pages/Home";
 
 const routes = [
 	{
@@ -27,7 +25,7 @@ const routes = [
 		],
 	},
 	{
-		path: "dashboard",
+		path: "tasks",
 		Component: Dashboard,
 		children: [
 			{

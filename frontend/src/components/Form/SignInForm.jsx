@@ -20,7 +20,7 @@ const SignIn = () => {
 			const res = await authUser(data);
 			localStorage.setItem("user", JSON.stringify(res.data.data));
 
-			navigate("/dashboard");
+			navigate("/tasks");
 			reset();
 		} catch (erro) {
 			if (erro.response) {

@@ -31,7 +31,7 @@ class QuestController extends Controller
         $form = Validator::make($req->all(), [
             'user' => 'integer|required|exists:users,id',
             'title' => 'string|required|min:5',
-            'description' => 'string|required',
+            'description' => 'string|optional',
             'limit_hours' => 'string|optional',
             'limit_date' => 'string|optional'
         ]);
